@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-"""Module test_base
+"""Module test_base_model
 
 This Module contains a tests for Base Class
 """
 
 import unittest
 
-from models import base_models
+from models import base_model
 
-Base = base_models.Base
+Base = base_model.Base
 
 
 class TestBase(unittest.TestCase):

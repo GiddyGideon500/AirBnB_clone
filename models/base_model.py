@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module base
+"""Module base_model
 
 This Module contains a definition for Base Class
 """
