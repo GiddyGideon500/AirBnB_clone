@@ -39,7 +39,7 @@ class TestBaseDocsAndStyle(unittest.TestCase):
         """Tests whether the class methods are documented"""
         funcs = inspect.getmembers(BaseModel, inspect.isfunction)
         for func in funcs:
-            self.assertTrue(len(func.__doc__) >= 1)
+            self.assertTrue(len(func[1].__doc__) >= 1)
 
     def test_class_name(self):
         """Test whether the class name is correct"""
