@@ -49,9 +49,10 @@ class TestBase(unittest.TestCase):
     def test_public_attributes_exist(self):
         """tests wether the public instance attributes - "id" "create_at" and
         "updated_at" exist."""
+        temp = Base()
         req_att = ["id", "created_at", "updated_at"]
-        for key in Base().__dict__:
-            self.assertTrue(key in req_att)
+        for attrib in req_att:
+            self.assertTrue(hasattr(temp, attrib))
 
     def test_id_attribute_shall_be_uuid4(self):
         """tests wether id attribute is of type string representation of
