@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Module base_model
 
-This Module contains a definition for Base Class
+This Module contains a definition for BaseModel Class
 """
 
 
-class Base:
-    """Base Class"""
+class BaseModel:
+    """BaseModel Class"""
     pass
