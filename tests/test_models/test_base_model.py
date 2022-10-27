@@ -49,23 +49,24 @@ class TestBaseDocsAndStyle(unittest.TestCase):
 class TestBase(unittest.TestCase):
     """Test cases for Base Class"""
 
+    def setUp(self):
+        """creates a test object for other tests"""
+        self.test_obj = BaseModel()
+
     def test_public_attributes_exist(self):
         """tests wether the public instance attributes - "id" "create_at" and
         "updated_at" exist."""
-        temp = BaseModel()
         req_att = ["id", "created_at", "updated_at"]
         for attrib in req_att:
-            self.assertTrue(hasattr(temp, attrib))
+            self.assertTrue(hasattr(self.test_obj, attrib))
 
     def test_id_attribute_shall_be_uuid4(self):
         """tests wether id attribute is of type string representation of
         datetime"""
-        temp = BaseModel()
-
-        self.assertIsInstance(temp.id, str)
+        self.assertIsInstance(self.test_obj.id, str)
 
         try:
-            _ = UUID(temp.id, version=4)
+            _ = UUID(self.test_obj.id, version=4)
         except Exception:
             self.assertTrue(False)
         else:
@@ -74,74 +75,68 @@ class TestBase(unittest.TestCase):
     def test_datetime_attributes(self):
         """tests if created_at and updated_at instance attributes are of
         datetime type"""
-        temp = BaseModel()
-        self.assertIsInstance(temp.created_at, datetime)
-        self.assertIsInstance(temp.updated_at, datetime)
+        self.assertIsInstance(self.test_obj.created_at, datetime)
+        self.assertIsInstance(self.test_obj.updated_at, datetime)
 
     def test_bas_str_should_print_formatted_output(self):
         """__str__ should print [<class name>] (<self.id>) <self.__dict__>"""
-        temp = BaseModel()
-        temp.my_number = 89
-        expected = f"[{BaseModel.__name__}] ({temp.id}) {temp.__dict__}"
+        self.test_obj.my_number = 89
+        cls_name = BaseModel.__name__
+        id = self.test_obj.id
+        expected = f"[{cls_name}] ({id}) {self.test_obj.__dict__}"
         output = StringIO()
         sys.stdout = output
-        print(temp)
+        print(self.test_obj)
         sys.stdout = sys.__stdout__
         self.assertEqual(output.getvalue().strip("\n"), expected)
 
     def test_public_method_attributes_exist(self):
         """tests wether public instance methods - "save" "to_dict" exist."""
-        temp = BaseModel()
         req_att = ["save", "to_dict"]
         for attrib in req_att:
-            self.assertTrue(hasattr(temp, attrib)
-                            and callable(getattr(temp, attrib)))
+            self.assertTrue(hasattr(self.test_obj, attrib)
+                            and callable(getattr(self.test_obj, attrib)))
 
     def test_save_method_updates_updated_at_value(self):
         """save method shall update updated_at"""
-        temp = BaseModel()
-        old_date = temp.updated_at
-        temp.save()
+        old_date = self.test_obj.updated_at
+        self.test_obj.save()
         self.assertIsInstance(old_date, datetime)
-        self.assertNotEqual(temp.updated_at, old_date)
+        self.assertNotEqual(self.test_obj.updated_at, old_date)
 
     def test_to_dict_returns_a_dictionary_of_attributes(self):
         """to_dict should return a dictionary containing all key/value of
         self.__dict__
         """
-        temp = BaseModel()
-        temp_dict = temp.to_dict()
+        temp_dict = self.test_obj.to_dict()
         self.assertIsInstance(temp_dict, dict)
         keys = temp_dict.keys()
 
-        for k, v in temp.__dict__.items():
+        for k, v in self.test_obj.__dict__.items():
             self.assertIn(k, keys)
-            if not isinstance(temp.__dict__[k], datetime):
+            if not isinstance(self.test_obj.__dict__[k], datetime):
                 self.assertEqual(temp_dict[k], v)
 
     def test_to_dict_has_a_key_with_the_class_name(self):
         """to_dict must have a key of __class__ with a value of the classes
         name
         """
-        temp = BaseModel()
-        temp_dict = temp.to_dict()
+        temp_dict = self.test_obj.to_dict()
         self.assertIn("__class__", temp_dict.keys())
         self.assertEqual(temp_dict["__class__"],
                          BaseModel.__name__)
 
     def test_to_dict_formats_dates_with_isoformat(self):
         """to_dict should store dates in isoformat"""
-        temp = BaseModel()
-        temp_dict = temp.to_dict()
+        temp_dict = self.test_obj.to_dict()
 
-        for k, v in temp.__dict__.items():
-            if isinstance(temp.__dict__[k], datetime):
+        for k, v in self.test_obj.__dict__.items():
+            if isinstance(self.test_obj.__dict__[k], datetime):
                 self.assertEqual(datetime.fromisoformat(temp_dict[k]), v)
 
     def test_init_with_kwargs(self):
         """test that BaseClass can be constructed from kwargs"""
-        temp_obj_1 = BaseModel()
-        temp_obj_2 = BaseModel(**temp_obj_1.to_dict())
+        temp_obj_2 = BaseModel(**self.test_obj.to_dict())
 
-        for k, v in temp_obj_1.__dict__.items():
+        for k, v in self.test_obj.__dict__.items():
             self.assertEqual(v, temp_obj_2.__dict__[k])
