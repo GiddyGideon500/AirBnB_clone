@@ -138,3 +138,10 @@ class TestBase(unittest.TestCase):
             if isinstance(temp.__dict__[k], datetime):
                 self.assertEqual(datetime.fromisoformat(temp_dict[k]), v)
 
+    def test_init_with_kwargs(self):
+        """test that BaseClass can be constructed from kwargs"""
+        temp_obj_1 = BaseModel()
+        temp_obj_2 = BaseModel(**temp_obj_1.to_dict())
+
+        for k, v in temp_obj_1.__dict__.items():
+            self.assertEqual(v, temp_obj_2.__dict__[k])
