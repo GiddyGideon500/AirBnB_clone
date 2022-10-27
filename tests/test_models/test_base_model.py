@@ -6,6 +6,7 @@ This Module contains a tests for Base Class
 
 import inspect
 import unittest
+from uuid import UUID
 
 import pycodestyle
 from models import base_model
@@ -44,4 +45,24 @@ class TestBaseDocsAndStyle(unittest.TestCase):
 
 class TestBase(unittest.TestCase):
     """Test cases for Base Class"""
-    pass
+
+    def test_public_attributes_exist(self):
+        """tests wether the public instance attributes - "id" "create_at" and
+        "updated_at" exist."""
+        req_att = ["id", "created_at", "updated_at"]
+        for key in Base().__dict__:
+            self.assertTrue(key in req_att)
+
+    def test_id_attribute_shall_be_uuid4(self):
+        """tests wether id attribute is of type string representation of
+        datetime"""
+        temp = Base()
+
+        self.assertTrue(isinstance(temp.id, str))
+
+        try:
+            _ = UUID(temp.id, version=4)
+        except Exception:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(True)
