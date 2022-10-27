@@ -5,7 +5,10 @@ This Module contains a tests for Base Class
 """
 
 import inspect
+import sys
 import unittest
+from datetime import datetime
+from io import StringIO
 from uuid import UUID
 
 import pycodestyle
@@ -74,6 +77,17 @@ class TestBase(unittest.TestCase):
         temp = BaseModel()
         self.assertTrue(isinstance(temp.created_at, datetime))
         self.assertTrue(isinstance(temp.updated_at, datetime))
+
+    def test_bas_str_should_print_formatted_output(self):
+        """__str__ should print [<class name>] (<self.id>) <self.__dict__>"""
+        temp = BaseModel()
+        temp.my_number = 89
+        expected = f"[{BaseModel.__name__}] ({temp.id}) {temp.__dict__}"
+        output = StringIO()
+        sys.stdout = output
+        print(temp)
+        sys.stdout = sys.__stdout__
+        self.assertEqual(output.getvalue().strip("\n"), expected)
 
     def test_public_method_attributes_exist(self):
         """tests wether public instance methods - "save" "to_dict" exist."""
