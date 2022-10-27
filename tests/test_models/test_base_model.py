@@ -140,3 +140,7 @@ class TestBase(unittest.TestCase):
 
         for k, v in self.test_obj.__dict__.items():
             self.assertEqual(v, temp_obj_2.__dict__[k])
+
+
+if __name__ == "__main__":
+    unittest.main()
