@@ -67,3 +67,11 @@ class TestBase(unittest.TestCase):
             self.assertTrue(False)
         else:
             self.assertTrue(True)
+
+    def test_datetime_attributes(self):
+        """tests if created_at and updated_at instance attributes are of
+        datetime type"""
+        temp = Base()
+        self.assertTrue(isinstance(temp.created_at, datetime))
+        self.assertTrue(isinstance(temp.updated_at, datetime))
+
