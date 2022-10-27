@@ -62,7 +62,7 @@ class TestBase(unittest.TestCase):
         datetime"""
         temp = BaseModel()
 
-        self.assertTrue(isinstance(temp.id, str))
+        self.assertIsInstance(temp.id, str)
 
         try:
             _ = UUID(temp.id, version=4)
@@ -75,8 +75,8 @@ class TestBase(unittest.TestCase):
         """tests if created_at and updated_at instance attributes are of
         datetime type"""
         temp = BaseModel()
-        self.assertTrue(isinstance(temp.created_at, datetime))
-        self.assertTrue(isinstance(temp.updated_at, datetime))
+        self.assertIsInstance(temp.created_at, datetime)
+        self.assertIsInstance(temp.updated_at, datetime)
 
     def test_bas_str_should_print_formatted_output(self):
         """__str__ should print [<class name>] (<self.id>) <self.__dict__>"""
@@ -102,5 +102,5 @@ class TestBase(unittest.TestCase):
         temp = BaseModel()
         old_date = temp.updated_at
         temp.save()
-        self.assertTrue(isinstance(old_date, datetime))
+        self.assertIsInstance(old_date, datetime)
         self.assertNotEqual(temp.updated_at, old_date)
