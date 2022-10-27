@@ -11,7 +11,7 @@ from uuid import UUID
 import pycodestyle
 from models import base_model
 
-Base = base_model.Base
+BaseModel = base_model.BaseModel
 
 
 class TestBaseDocsAndStyle(unittest.TestCase):
@@ -30,17 +30,17 @@ class TestBaseDocsAndStyle(unittest.TestCase):
 
     def test_class_docstring(self):
         """Tests whether the class is documented"""
-        self.assertTrue(len(Base.__doc__) >= 1)
+        self.assertTrue(len(BaseModel.__doc__) >= 1)
 
     def test_methods_docstring(self):
         """Tests whether the class methods are documented"""
-        funcs = inspect.getmembers(Base, inspect.isfunction)
+        funcs = inspect.getmembers(BaseModel, inspect.isfunction)
         for func in funcs:
             self.assertTrue(len(func.__doc__) >= 1)
 
     def test_class_name(self):
         """Test whether the class name is correct"""
-        self.assertEqual(Base.__name__, "Base")
+        self.assertEqual(BaseModel.__name__, "BaseModel")
 
 
 class TestBase(unittest.TestCase):
@@ -49,7 +49,7 @@ class TestBase(unittest.TestCase):
     def test_public_attributes_exist(self):
         """tests wether the public instance attributes - "id" "create_at" and
         "updated_at" exist."""
-        temp = Base()
+        temp = BaseModel()
         req_att = ["id", "created_at", "updated_at"]
         for attrib in req_att:
             self.assertTrue(hasattr(temp, attrib))
@@ -57,7 +57,7 @@ class TestBase(unittest.TestCase):
     def test_id_attribute_shall_be_uuid4(self):
         """tests wether id attribute is of type string representation of
         datetime"""
-        temp = Base()
+        temp = BaseModel()
 
         self.assertTrue(isinstance(temp.id, str))
 
@@ -71,13 +71,13 @@ class TestBase(unittest.TestCase):
     def test_datetime_attributes(self):
         """tests if created_at and updated_at instance attributes are of
         datetime type"""
-        temp = Base()
+        temp = BaseModel()
         self.assertTrue(isinstance(temp.created_at, datetime))
         self.assertTrue(isinstance(temp.updated_at, datetime))
 
     def test_public_method_attributes_exist(self):
         """tests wether public instance methods - "save" "to_dict" exist."""
-        temp = Base()
+        temp = BaseModel()
         req_att = ["save", "to_dict"]
         for attrib in req_att:
             self.assertTrue(hasattr(temp, attrib)
