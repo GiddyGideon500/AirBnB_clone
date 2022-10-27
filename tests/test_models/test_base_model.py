@@ -104,3 +104,37 @@ class TestBase(unittest.TestCase):
         temp.save()
         self.assertIsInstance(old_date, datetime)
         self.assertNotEqual(temp.updated_at, old_date)
+
+    def test_to_dict_returns_a_dictionary_of_attributes(self):
+        """to_dict should return a dictionary containing all key/value of
+        self.__dict__
+        """
+        temp = BaseModel()
+        temp_dict = temp.to_dict()
+        self.assertIsInstance(temp_dict, dict)
+        keys = temp_dict.keys()
+
+        for k, v in temp.__dict__.items():
+            self.assertIn(k, keys)
+            if not isinstance(temp.__dict__[k], datetime):
+                self.assertEqual(temp_dict[k], v)
+
+    def test_to_dict_has_a_key_with_the_class_name(self):
+        """to_dict must have a key of __class__ with a value of the classes
+        name
+        """
+        temp = BaseModel()
+        temp_dict = temp.to_dict()
+        self.assertIn("__class__", temp_dict.keys())
+        self.assertEqual(temp_dict["__class__"],
+                         BaseModel.__name__)
+
+    def test_to_dict_formats_dates_with_isoformat(self):
+        """to_dict should store dates in isoformat"""
+        temp = BaseModel()
+        temp_dict = temp.to_dict()
+
+        for k, v in temp.__dict__.items():
+            if isinstance(temp.__dict__[k], datetime):
+                self.assertEqual(datetime.fromisoformat(temp_dict[k]), v)
+
