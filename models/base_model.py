@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-"""Module base
+"""Module base_model
 
-This Module contains a definition for Base Class
+This Module contains a definition for BaseModel Class
 """
-from models
-from uuid import uuid4
+
 from datetime import datetime
+from uuid import uuid4
+
+import models
 
 
 class BaseModel:
-    """Base model Class for the hbnb project"""
+    """BaseModel Class"""
 
     def __init__(self, *args, **kwargs):
         """__init__ method & instantiation of class Basemodel"""
