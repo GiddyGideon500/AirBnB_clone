@@ -96,3 +96,11 @@ class TestBase(unittest.TestCase):
         for attrib in req_att:
             self.assertTrue(hasattr(temp, attrib)
                             and callable(getattr(temp, attrib)))
+
+    def test_save_method_updates_updated_at_value(self):
+        """save method shall update updated_at"""
+        temp = BaseModel()
+        old_date = temp.updated_at
+        temp.save()
+        self.assertTrue(isinstance(old_date, datetime))
+        self.assertNotEqual(temp.updated_at, old_date)
