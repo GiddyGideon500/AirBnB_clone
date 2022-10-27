@@ -75,3 +75,10 @@ class TestBase(unittest.TestCase):
         self.assertTrue(isinstance(temp.created_at, datetime))
         self.assertTrue(isinstance(temp.updated_at, datetime))
 
+    def test_public_method_attributes_exist(self):
+        """tests wether public instance methods - "save" "to_dict" exist."""
+        temp = Base()
+        req_att = ["save", "to_dict"]
+        for attrib in req_att:
+            self.assertTrue(hasattr(temp, attrib)
+                            and callable(getattr(temp, attrib)))
