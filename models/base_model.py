@@ -4,8 +4,8 @@
 This Module contains a definition for BaseModel Class
 """
 
-from datetime import datetime
 import uuid
+from datetime import datetime
 
 
 class BaseModel:
@@ -34,7 +34,7 @@ class BaseModel:
 
     def save(self):
         """Update updated_at with the current datetime."""
-        self.updated_at = datetime.today()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
@@ -42,10 +42,10 @@ class BaseModel:
         keys/values of __dict__ of the instance
         """
         bs_dict = (
-                {
-                    k: (v.isoformat() if isinstance(v, datetime) else v)
-                    for (k, v) in self.__dict__.items()
-                }
+            {
+                k: (v.isoformat() if isinstance(v, datetime) else v)
+                for (k, v) in self.__dict__.items()
+            }
         )
         bs_dict["__class__"] = self.__class__.__name__
         return bs_dict
