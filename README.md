@@ -20,5 +20,5 @@ The console is a command interpreter to manage the project abstractions.
 ## 0x03 Workflow
 
 ## 0x04 Author
-	**Kalkidan Betre**
-	**Kenny Ojimba**
+**Kalkidan Betre**
+**Kenny Ojimba**
