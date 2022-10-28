@@ -3,12 +3,13 @@
 
 This Module contains a definition for FileStorage Class
 """
-from models.base_model import BaseModel
 import json
+from models.base_model import BaseModel
+
 
 class FileStorage:
     """FileStorage Class
-    
+
     Attributes:
         __file_path (str): string - path to the JSON file
         __objects (dict): A dictionary of instantiated objects.
