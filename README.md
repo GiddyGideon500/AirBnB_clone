@@ -2,8 +2,9 @@
 
 # AirBnB_clone - The console
 1. [0x01 Introduction](#0x01-Introduction)
-2. [0x02 Description](#0x01-Description)
-3. [0x03 Command Interpreter](#Command Interpreter)
+2. [0x02 Description](#0x02-Description)
+3. [0x03 Workflow](#0x03-Workflow)
+4. [0x04 Author](#0x04-Authors)
 
 ## 0x01 Introduction
 A team project required to build an AirBnB clone.
