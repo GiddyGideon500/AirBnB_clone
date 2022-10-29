@@ -5,10 +5,13 @@ This Module contains a tests for FileStorage Class
 """
 
 import inspect
+import json
+import os
 import unittest
 
 import pycodestyle
 from models.engine import file_storage
+from tests.test_models.test_base_model import BaseModel
 
 FileStorage = file_storage.FileStorage
 
@@ -47,4 +50,17 @@ class TestFileStorageDocsAndStyle(unittest.TestCase):
 
 class TestFileStorage(unittest.TestCase):
     """Test cases for FileStorage Class"""
-    pass
+
+    def setUp(self):
+        """initial configuration for tests"""
+        self.file_path = "file.json"
+        with open(self.file_path, 'w') as f:
+            f.write(json.dumps({}))
+        self.storage = FileStorage()
+        self.storage.reload()
+
+    def tearDown(self):
+        """cleanup test files"""
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+
