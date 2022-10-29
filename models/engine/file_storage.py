@@ -32,7 +32,7 @@ class FileStorage:
         """Serialize __objects to the JSON file __file_path."""
         with open(self.__file_path, mode="w") as f:
             f.write(json.dumps({k: v.to_dict()
-                for k, v in self.__objects.items()}))
+                    for k, v in self.__objects.items()}))
 
     def reload(self):
         """Deserialize the JSON file __file_path to __objects, if it exists."""
@@ -40,4 +40,5 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 content = f.read()
                 if len(content) > 0:
-                    self.__objects = {k: BaseModel(**v) for k, v in jason.loads(content).items()}
+                    self.__objects = {k: BaseModel(**v)
+                            for k, v in jason.loads(content).items()}
