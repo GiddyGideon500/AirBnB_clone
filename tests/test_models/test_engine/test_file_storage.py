@@ -93,3 +93,35 @@ class TestFileStorage(unittest.TestCase):
 
         self.assertDictEqual(expected_objects, objects)
 
+    def test_reload_method_reloads_saved_objects(self):
+        """test wether the reload method correctly loads objects from file"""
+        expected_objects = {}
+        for _ in range(4):
+            bs_mdl = BaseModel()
+            self.storage.new(bs_mdl)
+            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+
+        self.storage.save()
+        self.storage.reload()
+        saved_objects = self.storage.all()
+
+        saved_objects_dict = {k: v.to_dict() for k, v in saved_objects.items()}
+        self.assertEqual(expected_objects, saved_objects_dict)
+
+    def test_reload_method_does_not_do_anything_for_non_existent_file(self):
+        """reload does not do anything if the file does not exist"""
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+
+        expected_objects = {}
+        for _ in range(4):
+            bs_mdl = BaseModel()
+            self.storage.new(bs_mdl)
+            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+
+        self.storage.reload()
+        existing_objects = self.storage.all()
+
+        existing_objects_dict = {k: v.to_dict()
+                                 for k, v in existing_objects.items()}
+        self.assertEqual(expected_objects, existing_objects_dict)
