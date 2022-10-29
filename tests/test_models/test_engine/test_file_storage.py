@@ -64,3 +64,13 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
+    def test_all_returns_a_dictionary(self):
+        """tests wether the instance method 'all' returns a valid dictionary"""
+        self.assertIsInstance(self.storage.all(), dict)
+
+    def test_new_adds_instance_obj_to_dict_of_objects(self):
+        """tests wether the instance method 'new' adds new object"""
+        temp_obj = BaseModel()
+        self.storage.new(temp_obj)
+        self.assertIn(temp_obj.id, self.storage.all().keys())
+
