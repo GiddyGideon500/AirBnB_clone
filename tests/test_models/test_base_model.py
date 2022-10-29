@@ -39,7 +39,7 @@ class TestBaseDocsAndStyle(unittest.TestCase):
         """Tests whether the class methods are documented"""
         funcs = inspect.getmembers(BaseModel, inspect.isfunction)
         for func in funcs:
-            self.assertTrue(len(func.__doc__) >= 1)
+            self.assertTrue(len(func[1].__doc__) >= 1)
 
     def test_class_name(self):
         """Test whether the class name is correct"""
@@ -116,6 +116,11 @@ class TestBase(unittest.TestCase):
             self.assertIn(k, keys)
             if not isinstance(self.test_obj.__dict__[k], datetime):
                 self.assertEqual(temp_dict[k], v)
+
+    def test_to_dict_returns_a_new_dictionary_of_attributes(self):
+        """to_dict should return a copy of __dict__"""
+        temp_dict = self.test_obj.to_dict()
+        self.assertNotEqual(id(temp_dict), id(self.test_obj.__dict__))
 
     def test_to_dict_has_a_key_with_the_class_name(self):
         """to_dict must have a key of __class__ with a value of the classes
