@@ -74,3 +74,22 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(temp_obj)
         self.assertIn(temp_obj.id, self.storage.all().keys())
 
+    def test_save_method_saves_objects_to_file(self):
+        """tests wether the save method saves objects to file"""
+        expected_objects = {}
+        for _ in range(4):
+            bs_mdl = BaseModel()
+            self.storage.new(bs_mdl)
+            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+
+        self.storage.save()
+
+        self.assertTrue(os.path.exists(self.file_path))
+        with open(self.file_path, 'r') as f:
+            content = f.read()
+            if len(content) > 0:
+                objects = {k: v
+                           for k, v in json.loads(content).items()}
+
+        self.assertDictEqual(expected_objects, objects)
+
