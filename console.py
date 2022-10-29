@@ -21,6 +21,12 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
+    def emptyline(self):
+        """prevents default behavior of cmd to ignore running command on 
+        empty line plus enter
+        """
+        pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
