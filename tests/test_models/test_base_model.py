@@ -5,6 +5,8 @@ This Module contains a tests for Base Class
 """
 
 import inspect
+import json
+import os
 import sys
 import unittest
 from datetime import datetime
@@ -13,11 +15,12 @@ from uuid import UUID
 
 import pycodestyle
 from models import base_model
+from models.engine.file_storage import FileStorage
 
 BaseModel = base_model.BaseModel
 
 
-class TestBaseDocsAndStyle(unittest.TestCase):
+class TestBaseModelDocsAndStyle(unittest.TestCase):
     """Tests Base class for documentation and style conformance"""
 
     def test_pycodestyle(self):
@@ -46,7 +49,7 @@ class TestBaseDocsAndStyle(unittest.TestCase):
         self.assertEqual(BaseModel.__name__, "BaseModel")
 
 
-class TestBase(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     """Test cases for Base Class"""
 
     def setUp(self):
@@ -103,6 +106,28 @@ class TestBase(unittest.TestCase):
         self.test_obj.save()
         self.assertIsInstance(old_date, datetime)
         self.assertNotEqual(self.test_obj.updated_at, old_date)
+
+    def test_save_method_updates_storage(self):
+        """save method shall update storage"""
+        file_path = "file.json"
+        with open(file_path, 'w') as f:
+            json.dump({}, f)
+        storage = FileStorage()
+        storage.reload()
+        storage.new(self.test_obj)
+        storage.save()
+
+        old_date = self.test_obj.updated_at
+        self.test_obj.save()
+
+        storage.reload()
+        saved_obj = storage.all(
+        )[f"{self.test_obj.__class__.__name__}.{self.test_obj.id}"]
+
+        self.assertNotEqual(old_date, saved_obj.updated_at)
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
     def test_to_dict_returns_a_dictionary_of_attributes(self):
         """to_dict should return a dictionary containing all key/value of
