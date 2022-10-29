@@ -55,7 +55,7 @@ class TestFileStorage(unittest.TestCase):
         """initial configuration for tests"""
         self.file_path = "file.json"
         with open(self.file_path, 'w') as f:
-            f.write(json.dumps({}))
+            json.dump({}, f)
         self.storage = FileStorage()
         self.storage.reload()
 
@@ -87,11 +87,10 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
 
         self.assertTrue(os.path.exists(self.file_path))
+        self.assertGreater(os.path.getsize(self.file_path), 0)
         with open(self.file_path, 'r') as f:
-            content = f.read()
-            if len(content) > 0:
-                objects = {k: v
-                           for k, v in json.loads(content).items()}
+            objects = {k: v
+                       for k, v in json.load(f).items()}
 
         self.assertDictEqual(expected_objects, objects)
 
