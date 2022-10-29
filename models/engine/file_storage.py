@@ -30,7 +30,7 @@ class FileStorage:
 
     def save(self):
         """Serialize __objects to the JSON file __file_path."""
-        with open(self.__file_path, mode="w") as f:
+        with open(self.__file_path, 'w') as f:
             f.write(json.dumps({k: v.to_dict()
                     for k, v in self.__objects.items()}))
 
@@ -41,4 +41,4 @@ class FileStorage:
                 content = f.read()
                 if len(content) > 0:
                     self.__objects = {k: BaseModel(**v)
-                                for k, v in json.loads(content).items()}
+                            for k, v in json.loads(content).items()}
