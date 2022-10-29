@@ -3,10 +3,12 @@
 
 This Module contains a definition for FileStorage Class
 """
+
+
+import importlib
 import json
 import os
-
-from models.base_model import BaseModel
+import re
 
 
 class FileStorage:
@@ -26,19 +28,17 @@ class FileStorage:
 
     def new(self, obj):
         """Set in __objects obj with key <obj_class_name>.id"""
-        self.__objects[obj.id] = obj
+        self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         """Serialize __objects to the JSON file __file_path."""
         with open(self.__file_path, 'w') as f:
-            f.write(json.dumps({k: v.to_dict()
-                    for k, v in self.__objects.items()}))
+            json.dumps({k: v.to_dict() for k, v in self.__objects.items()})
 
     def reload(self):
         """Deserialize the JSON file __file_path to __objects, if it exists."""
-        if os.path.isfile(self.__file_path):
+        if (os.path.isfile(self.__file_path)
+                and os.path.getsize(self.__file_path) > 0):
             with open(self.__file_path, 'r') as f:
-                content = f.read()
-                if len(content) > 0:
-                    self.__objects = {k: BaseModel(**v)
-                            for k, v in json.loads(content).items()}
+                self.__objects = {k: self.get_class(k.split(".")[0])(**v)
+                            for k, v in json.load(f).items()}
