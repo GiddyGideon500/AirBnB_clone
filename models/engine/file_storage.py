@@ -44,3 +44,4 @@ class FileStorage:
                             for k, v in json.load(f).items()}
 
     def get_class(self, name):
+        """ returns a class from models module using its name"""
