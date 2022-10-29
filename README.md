@@ -2,13 +2,23 @@
 
 # AirBnB_clone - The console
 1. [0x01 Introduction](#0x01-Introduction)
-2. [0x02 Description](#0x01-Description)
-3. [0x03 Command Interpreter](#Command Interpreter)
+2. [0x02 Description](#0x02-Description)
+3. [0x03 Workflow](#0x03-Workflow)
+4. [0x04 Author](#0x04-Authors)
 
 ## 0x01 Introduction
-A team project required to build an AirBnB clone.
+An ALX project to build an AirBnB clone.
+This first version only implements the web application's command intepreter.
 
+## 0x02 Description
+This web application requires a console to be able to manage the backend.
+
+The console will perform the following task
+### Command Interpreter
 The console is a command interpreter to manage the project abstractions.
 
-## Command Interpreter
- 
+## 0x03 Workflow
+
+## 0x04 Author
+1. **Kalkidan Betre**
+2. **Kenny Ojimba**

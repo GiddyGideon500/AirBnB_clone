@@ -7,6 +7,8 @@ This Module contains a definition for BaseModel Class
 import uuid
 from datetime import datetime
 
+import models
+
 
 class BaseModel:
     """BaseModel Class"""
@@ -18,6 +20,9 @@ class BaseModel:
             *args.
             **kwargs (dict): Key/value pairs
         """
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
         if kwargs is not None and len(kwargs) > 0:
             for k, v in kwargs.items():
@@ -28,9 +33,7 @@ class BaseModel:
                 else:
                     setattr(self, k, v)
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def save(self):
         """Update updated_at with the current datetime."""
