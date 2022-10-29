@@ -72,7 +72,8 @@ class TestFileStorage(unittest.TestCase):
         """tests wether the instance method 'new' adds new object"""
         temp_obj = BaseModel()
         self.storage.new(temp_obj)
-        self.assertIn(temp_obj.id, self.storage.all().keys())
+        key = f"{temp_obj.__class__.__name__}.{temp_obj.id}"
+        self.assertIn(key, self.storage.all().keys())
 
     def test_save_method_saves_objects_to_file(self):
         """tests wether the save method saves objects to file"""
@@ -80,7 +81,8 @@ class TestFileStorage(unittest.TestCase):
         for _ in range(4):
             bs_mdl = BaseModel()
             self.storage.new(bs_mdl)
-            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+            key = f"{bs_mdl.__class__.__name__}.{bs_mdl.id}"
+            expected_objects[key] = bs_mdl.to_dict()
 
         self.storage.save()
 
@@ -99,7 +101,8 @@ class TestFileStorage(unittest.TestCase):
         for _ in range(4):
             bs_mdl = BaseModel()
             self.storage.new(bs_mdl)
-            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+            key = f"{bs_mdl.__class__.__name__}.{bs_mdl.id}"
+            expected_objects[key] = bs_mdl.to_dict()
 
         self.storage.save()
         self.storage.reload()
@@ -117,7 +120,8 @@ class TestFileStorage(unittest.TestCase):
         for _ in range(4):
             bs_mdl = BaseModel()
             self.storage.new(bs_mdl)
-            expected_objects[bs_mdl.id] = bs_mdl.to_dict()
+            key = f"{bs_mdl.__class__.__name__}.{bs_mdl.id}"
+            expected_objects[key] = bs_mdl.to_dict()
 
         self.storage.reload()
         existing_objects = self.storage.all()
