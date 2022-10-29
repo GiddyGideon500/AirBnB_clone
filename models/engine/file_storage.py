@@ -42,3 +42,5 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 self.__objects = {k: self.get_class(k.split(".")[0])(**v)
                             for k, v in json.load(f).items()}
+
+    def get_class(self, name):
