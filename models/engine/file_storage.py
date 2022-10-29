@@ -41,4 +41,4 @@ class FileStorage:
                 content = f.read()
                 if len(content) > 0:
                     self.__objects = {k: BaseModel(**v)
-                                for k, v in jason.loads(content).items()}
+                                for k, v in json.loads(content).items()}
