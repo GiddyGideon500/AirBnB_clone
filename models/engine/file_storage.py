@@ -33,7 +33,7 @@ class FileStorage:
     def save(self):
         """Serialize __objects to the JSON file __file_path."""
         with open(self.__file_path, 'w') as f:
-            json.dumps({k: v.to_dict() for k, v in self.__objects.items()})
+            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
         """Deserialize the JSON file __file_path to __objects, if it exists."""
@@ -41,7 +41,7 @@ class FileStorage:
                 and os.path.getsize(self.__file_path) > 0):
             with open(self.__file_path, 'r') as f:
                 self.__objects = {k: self.get_class(k.split(".")[0])(**v)
-                            for k, v in json.load(f).items()}
+                                  for k, v in json.load(f).items()}
 
     def get_class(self, name):
         """ returns a class from models module using its name"""
