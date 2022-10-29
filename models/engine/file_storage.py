@@ -45,3 +45,6 @@ class FileStorage:
 
     def get_class(self, name):
         """ returns a class from models module using its name"""
+        sub_module = re.sub('(?!^)([A-Z]+)', r'_\1', name).lower()
+        module = importlib.import_module(f"models.{sub_module}")
+        return getattr(module, name)
