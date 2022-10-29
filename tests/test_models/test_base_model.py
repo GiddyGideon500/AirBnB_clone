@@ -117,6 +117,11 @@ class TestBase(unittest.TestCase):
             if not isinstance(self.test_obj.__dict__[k], datetime):
                 self.assertEqual(temp_dict[k], v)
 
+    def test_to_dict_returns_a_new_dictionary_of_attributes(self):
+        """to_dict should return a copy of __dict__"""
+        temp_dict = self.test_obj.to_dict()
+        self.assertNotEqual(id(temp_dict), id(self.test_obj.__dict__))
+
     def test_to_dict_has_a_key_with_the_class_name(self):
         """to_dict must have a key of __class__ with a value of the classes
         name
