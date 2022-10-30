@@ -167,6 +167,33 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return None
 
+    def parse_input(self, input):
+        args = input.split('.')
+        if len(args) != 2:
+            return None, None, None, None
+
+        cls_name = args[0]
+        valid_commands = ["all", "count", "show", "destroy", "update"]
+        if '(' not in args[1] or ')' not in args[1]:
+            return cls_name, None, None, None
+
+        func_w_args = args[1].split("(")
+        if len(func_w_args) == 0 or func_w_args[0] not in valid_commands:
+            return cls_name, None, None, None
+        func_name = func_w_args[0]
+        f_args = func_w_args[1].strip(')')
+
+        id_match = re.match(r'(^\"[\w-]+\")', f_args)
+        if len(f_args) == 0 or id_match is None:
+            return cls_name, func_name, None, None
+
+        id = id_match.group()
+        f_args = f_args.replace(id, "")
+        id = id.strip('"')
+
+        if len(f_args) == 0:
+            return cls_name, func_name, id, ''
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
