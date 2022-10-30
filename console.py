@@ -199,8 +199,7 @@ class HBNBCommand(cmd.Cmd):
                 self.do_update(f"{cls_name} {args}")
             elif isinstance(args, dict):
                 for k, v in args.items():
-                    args = " ".join([id, k, v])
-                    self.do_update(f"{cls_name} {args}")
+                    self.do_update(f"{cls_name} {id} {k} {v}")
 
     def parse_input(self, input):
         args = input.split('.')
