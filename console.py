@@ -167,6 +167,26 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return None
 
+    def default(self, line):
+        if '.' not in line:
+            return super().default(line)
+
+        cls_name, func_name, id, args = self.parse_input(line)
+
+        if cls_name is None:
+            print("** class name missing **")
+            return
+
+        if func_name is None:
+            print(
+                "** incorrect function (all, count, show, destroy & update) **"
+            )
+            return
+
+        id = id if id is not None else ""
+
+        if func_name == "count":
+            self.do_count(cls_name)
     def parse_input(self, input):
         args = input.split('.')
         if len(args) != 2:
