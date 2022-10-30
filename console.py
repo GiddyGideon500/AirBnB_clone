@@ -191,6 +191,8 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(cls_name)
         elif func_name == "show":
             self.do_show(f"{cls_name} {id}")
+        elif func_name == "destroy":
+            self.do_destroy(f"{cls_name} {id}")
     def parse_input(self, input):
         args = input.split('.')
         if len(args) != 2:
