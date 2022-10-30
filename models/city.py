@@ -15,3 +15,4 @@ class city(BaseModel):
     """
 
     state_id = ""
+    name = ""
