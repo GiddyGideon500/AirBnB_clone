@@ -4,7 +4,7 @@
 from models.base_model import BaseModel
 
 
-class state(BaseModel):
+class State(BaseModel):
     """
     Represents the state of the model
 
