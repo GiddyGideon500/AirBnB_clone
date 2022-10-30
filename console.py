@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
         """parses and returns a tuple of attribute name and value"""
         cmds = line.split()
 
-        attr_name = None if len(cmds) < 3 else cmds[2]
+        attr_name = None if len(cmds) < 3 else cmds[2].strip('"')
         if attr_name is None:
             print("** attribute name missing **")
             return None, None
@@ -193,6 +193,15 @@ class HBNBCommand(cmd.Cmd):
             self.do_show(f"{cls_name} {id}")
         elif func_name == "destroy":
             self.do_destroy(f"{cls_name} {id}")
+        elif func_name == "update":
+            if isinstance(args, str):
+                args = " ".join([id, args])
+                self.do_update(f"{cls_name} {args}")
+            elif isinstance(args, dict):
+                for k, v in args.items():
+                    args = " ".join([id, k, v])
+                    self.do_update(f"{cls_name} {args}")
+
     def parse_input(self, input):
         args = input.split('.')
         if len(args) != 2:
