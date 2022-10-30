@@ -194,6 +194,16 @@ class HBNBCommand(cmd.Cmd):
         if len(f_args) == 0:
             return cls_name, func_name, id, ''
 
+        dict_match = re.match(r'(\{.*\})', f_args.strip(", "))
+        if dict_match is not None:
+            dict_str = dict_match.group().replace("'", '"')
+            return (
+                cls_name, func_name, id, dict(json.loads(dict_str))
+            )
+
+        f_args = f_args.replace(',', ' ')
+        return cls_name, func_name, id, str(f_args)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
