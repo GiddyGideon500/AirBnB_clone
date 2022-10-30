@@ -6,6 +6,7 @@ This Module contains a definition for HBNBCommand Class
 
 import cmd
 import importlib
+import json
 import re
 from typing import cast
 
@@ -103,6 +104,16 @@ class HBNBCommand(cmd.Cmd):
                 attr_val = cast(attr_type, attr_val)
             setattr(saved_obj, attr_name, attr_val)
             saved_obj.save()
+
+    def do_count(self, line):
+        """prints the count of all instances based the class name"""
+        obj_cls = self.get_class_from_input(line)
+        if obj_cls is None:
+            return
+        result = list(filter(lambda item: isinstance(
+            item, obj_cls), storage.all().values()))
+
+        print(len(result))
 
     def get_obj_key_from_input(self, line):
         """parses and returns object key from input"""
