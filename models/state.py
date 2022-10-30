@@ -5,4 +5,9 @@ from models.base_model import BaseModel
 
 
 class state(BaseModel):
-    pass
+    """
+    Represents the state of the model
+
+    Atrribute:
+        name (str): the name of the state
+    """
