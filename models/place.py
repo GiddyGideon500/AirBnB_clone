@@ -5,7 +5,8 @@ from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """implementing a place class.
+    """
+    implementing a place class.
 
     Attributes:
         city_id (str): The City id.
