@@ -1,15 +1,16 @@
 #!/usr/bin/python3
+"""Module base_model
 
-"""implementation for the city class"""
+This Module contains a definition for City Class
+"""
 
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """
-    implementing the city class
+    """A class that represents a city
 
-    Attribute:
+    Attributes:
         name (str): name of the city
         state_id (str): the state id
     """

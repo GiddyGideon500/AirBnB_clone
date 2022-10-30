@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-"""state class inherited from basemodel"""
+"""Module base_model
+
+This Module contains a definition for State Class
+"""
 
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """
-    Represents the state of the model
+    """A class that represents a state
 
-    Atrribute:
+    Attribute:
         name (str): the name of the state
     """
 
