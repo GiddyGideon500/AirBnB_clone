@@ -187,6 +187,10 @@ class HBNBCommand(cmd.Cmd):
 
         if func_name == "count":
             self.do_count(cls_name)
+        elif func_name == "all":
+            self.do_all(cls_name)
+        elif func_name == "show":
+            self.do_show(f"{cls_name} {id}")
     def parse_input(self, input):
         args = input.split('.')
         if len(args) != 2:
