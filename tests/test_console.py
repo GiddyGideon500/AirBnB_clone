@@ -92,7 +92,7 @@ class TestConsole(unittest.TestCase):
             self.cmd.onecmd('destroy BaseModel adfadfadf')
             self.assertIn("** no instance found **", output.getvalue())
 
-    def test_destroy_displays_an_object(self):
+    def test_destroy_deletes_an_object(self):
         """tests the destroy deletes a instance"""
         with patch('sys.stdout', new=StringIO()) as output:
             self.cmd.onecmd('create BaseModel')
@@ -127,10 +127,80 @@ class TestConsole(unittest.TestCase):
             self.cmd.onecmd(f'update BaseModel {id}')
             self.assertIn("** attribute name missing **", output.getvalue())
 
-    def test_update_attr_name_missing_error(self):
+    def test_update_attr_value_missing_error(self):
         """test update command shows attr val missing error"""
         with patch('sys.stdout', new=StringIO()) as output:
             self.cmd.onecmd('create BaseModel')
             id = output.getvalue().strip('\n')
             self.cmd.onecmd(f'update BaseModel {id} fname')
             self.assertIn("** value missing **", output.getvalue())
+
+    def test_update_updates_instance(self):
+        """test update command shows attr val missing error"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create State')
+            id = output.getvalue().strip('\n')
+            self.cmd.onecmd(f'update State {id} name example_state')
+            self.cmd.onecmd(f'show State {id}')
+            self.assertIn('name', output.getvalue())
+            self.assertIn('example_state', output.getvalue())
+
+    def test_classname_all_displays_instance_objects(self):
+        """tests the all shows instance objects"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create BaseModel')
+            self.cmd.onecmd('create BaseModel')
+            self.cmd.onecmd('BaseModel.all()')
+            self.assertIn("BaseModel", output.getvalue())
+            self.assertGreaterEqual(output.getvalue().count("BaseModel"), 2)
+
+    def test_classname_count_displays_instance_objects(self):
+        """tests the all shows instance objects"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create Place')
+            self.cmd.onecmd('create Place')
+            self.cmd.onecmd('create Place')
+            self.cmd.onecmd('create Place')
+            self.cmd.onecmd('create Place')
+            self.cmd.onecmd('Place.count()')
+            self.assertIn('5', output.getvalue())
+
+    def test_classname_show_displays_an_object(self):
+        """tests the show shows an instance"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create BaseModel')
+            id = output.getvalue().strip('\n')
+            self.cmd.onecmd(f'BaseModel.show("{id}")')
+            self.assertIn("BaseModel", output.getvalue())
+
+    def test_classname_destroy_deletes_an_object(self):
+        """tests the destroy deletes a instance"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create BaseModel')
+            id = output.getvalue().strip('\n')
+            self.cmd.onecmd(f'BaseModel.destroy("{id}")')
+            self.cmd.onecmd(f'show BaseModel {id}')
+            self.assertIn("** no instance found **", output.getvalue())
+
+    def test_classname_update_updates_instance(self):
+        """test update command shows attr val missing error"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create Review')
+            id = output.getvalue().strip('\n')
+            self.cmd.onecmd(f'Review.update("{id}", "rev_k", "rev_v")')
+            self.cmd.onecmd(f'show Review {id}')
+            self.assertIn('rev_k', output.getvalue())
+            self.assertIn('rev_v', output.getvalue())
+
+    def test_classname_update_updates_instance_with_dict(self):
+        """test update command shows attr val missing error"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.cmd.onecmd('create Amenity')
+            id = output.getvalue().strip('\n')
+            dict_att = "{ 'name' : 'amne', 'rev_k' : 'rev_v' }"
+            self.cmd.onecmd(f'Amenity.update("{id}", {dict_att})')
+            self.cmd.onecmd(f'show Amenity {id}')
+            self.assertIn('name', output.getvalue())
+            self.assertIn('amne', output.getvalue())
+            self.assertIn('rev_k', output.getvalue())
+            self.assertIn('rev_v', output.getvalue())
