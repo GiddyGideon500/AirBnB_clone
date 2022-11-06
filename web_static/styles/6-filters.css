@@ -68,6 +68,7 @@
 	margin-top: 70px;
 	padding: 30px;
 	padding-top: 20px;
+	z-index: 1000;
 }
 
 .popover h2 {
