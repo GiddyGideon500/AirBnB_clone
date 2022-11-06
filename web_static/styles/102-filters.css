@@ -90,17 +90,17 @@
 /* For mobile*/
 @media only screen and (max-width: 768px) {
 	.filters {
-		border-radius: 30px;
+		border-radius: 40px;
 	}
 
 	.filters button {
 		font-size: 0px;
-		height: 100%;
-		width: 80px;
-		border-radius: 0px 30px 30px 0px;
-		margin-right: 0px;
+		height: 55px;
+		width: 55px;
+		border-radius: 100%;
+		margin-right: 5px;
 		background-image: url("../images/serach.png");
-		background-size: 30px;
+		background-size: 25px;
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
 	}
