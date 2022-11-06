@@ -55,7 +55,11 @@ Each numbered page represents a progressive development of the design in which i
 </a>
 <br />
 <br />
-
+<a style="background-color: #3498db; color: #FFF; padding: 8px; border-radius: 6px" href="https://kalbetre-alx.github.io/AirBnB_clone/web_static/102-index.html">
+102-Index.html
+</a>
+<br />
+<br />
 
 ## Authors
 Kalkidan Betre
