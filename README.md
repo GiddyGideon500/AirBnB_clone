@@ -1,3 +1,7 @@
+<a style="background-color: #3498db; color: #FFF; padding: 8px; border-radius: 6px" href="https://kalbetre-alx.github.io/AirBnB_clone/web_static">
+Static Pages Live Demos
+</a>
+
 # AirBnB Clone - The Console
 
 ## Project Overview
