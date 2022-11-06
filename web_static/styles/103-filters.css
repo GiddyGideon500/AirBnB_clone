@@ -95,7 +95,6 @@
 	}
 
 	.filters button {
-		font-size: 0px;
 		height: 55px;
 		width: 55px;
 		border-radius: 100%;
@@ -104,6 +103,10 @@
 		background-size: 25px;
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
+	}
+
+	.filters button span {
+		display: none;
 	}
 
 	.locations,
